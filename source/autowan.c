@@ -160,10 +160,9 @@ void AutoWAN_main()
           AUTO_WAN_LOG("syscfg_get failed to retrieve ovs_enable\n");
 
     }
-    if( (0 == access( ONEWIFI_ENABLED, F_OK )) || (0 == access( OPENVSWITCH_LOADED, F_OK ))
-                                               || (access(WFO_ENABLED, F_OK) == 0 ) )
+    if( 0 == access( OPENVSWITCH_LOADED, F_OK ) )
     {
-        AUTO_WAN_LOG("g_OvsEnable is set to 1 for OneWifi/WFO build\n");
+        AUTO_WAN_LOG("g_OvsEnable is set to 1\n");
         g_OvsEnable = 1;
     }
 #endif 

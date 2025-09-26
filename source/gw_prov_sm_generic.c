@@ -1774,7 +1774,8 @@ pid_t findProcessId(char *processName)
 
     if ((f = popen(request, "r")) != NULL)
     {
-        fgets(response, (255), f);
+        if(fgets(response, (255), f) == NULL)
+            GWPROV_PRINT("%s fgets error \n", __FUNCTION__);
 
         pclose(f);
     }
@@ -1783,7 +1784,8 @@ pid_t findProcessId(char *processName)
 
     if ((f = popen(request, "r")) != NULL)
     {
-        fgets(response, (255), f);
+        if(fgets(response, (255), f) == NULL)
+            GWPROV_PRINT("%s fgets error \n", __FUNCTION__);
         pid = atoi(response);
         pclose(f);
     }

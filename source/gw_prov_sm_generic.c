@@ -130,7 +130,7 @@ token_t sysevent_led_token;
 #define ETHWAN_DEF_INTF_NAME "nsgmii0"
 #elif defined(_PLATFORM_TURRIS_)
 #define ETHWAN_DEF_INTF_NAME "eth2"
-#elif defined(_XER5_PRODUCT_REQ_) || defined(_SCER11BEL_PRODUCT_REQ_)
+#elif defined(_XER5_PRODUCT_REQ_) || defined(_SCER11BEL_PRODUCT_REQ_) || defined(_SCXF11BFL_PRODUCT_REQ_)
 #define ETHWAN_DEF_INTF_NAME "eth4"
 #elif defined(_CBR2_PRODUCT_REQ_)
 #define ETHWAN_DEF_INTF_NAME "eth5"
@@ -415,7 +415,7 @@ unsigned char IsThisFeatureApplicable( const char* pcFeatureDBFlag )
     return FALSE;
 }
 
-#if defined(_SCER11BEL_PRODUCT_REQ_)
+#if defined(_SCER11BEL_PRODUCT_REQ_) || defined(_SCXF11BFL_PRODUCT_REQ_)
 static int getVendorClassInfo(char *buffer, int length)
 {
     char model[32] = "";
@@ -474,7 +474,7 @@ static void set_vendor_spec_conf( void )
         GWPROV_PRINT("getVendorClassInfo failed");
     }
 }
-#endif /** _SCER11BEL_PRODUCT_REQ_ */
+#endif /** _SCER11BEL_PRODUCT_REQ_ , _SCXF11BFL_PRODUCT_REQ_*/
 #endif /** _RDKB_GLOBAL_PRODUCT_REQ_ */
 
 STATIC int IsEthWanEnabled(void)
@@ -1269,7 +1269,7 @@ static void *GWP_sysevent_threadfunc(void *data)
                             GWPROV_PRINT("Device is not in Captive Portal, setting LED to SOLID WHITE \n");
                         }
 
-#if !defined(_SCER11BEL_PRODUCT_REQ_) && !defined(FEATURE_RDKB_LED_MANAGER_PORT)
+#if !defined(_SCER11BEL_PRODUCT_REQ_) && !defined(_SCXF11BFL_PRODUCT_REQ_) && !defined(FEATURE_RDKB_LED_MANAGER_PORT)
                         if(0 != platform_hal_setLed(&ledMgmt)) {
                             GWPROV_PRINT("platform_hal_setLed failed\n");
 
@@ -1337,7 +1337,7 @@ static void *GWP_sysevent_threadfunc(void *data)
                           if (buf[0] != '\0') sysevent_set(sysevent_fd_gs, sysevent_token_gs, "ipv4-up", buf, 0);
 #endif
 
-#if defined(RDK_ONEWIFI) && (defined(_XB6_PRODUCT_REQ_) || defined(_WNXL11BWL_PRODUCT_REQ_) || defined(_SCER11BEL_PRODUCT_REQ_) || defined(_CBR2_PRODUCT_REQ_))
+#if defined(RDK_ONEWIFI) && (defined(_XB6_PRODUCT_REQ_) || defined(_WNXL11BWL_PRODUCT_REQ_) || defined(_SCER11BEL_PRODUCT_REQ_) || defined(_CBR2_PRODUCT_REQ_) || defined(_SCXF11BFL_PRODUCT_REQ_) )
         GWPROV_PRINT("CALL VLAN UTIL TO SET UP LNF\n");
 #if defined(_RDKB_GLOBAL_PRODUCT_REQ_)
         char lnfEnabled[8] = {0};
@@ -1422,13 +1422,13 @@ static void *GWP_sysevent_threadfunc(void *data)
                             v_secure_system("ip -6 addr add %s/64 dev %s", tmp_buf, LAN_BRIDGE_NAME);
                         }                      
                       }
-#if defined(_SCER11BEL_PRODUCT_REQ_)
+#if defined(_SCER11BEL_PRODUCT_REQ_) || defined(_SCXF11BFL_PRODUCT_REQ_)
                       if ( TRUE == IsThisCurrentPartnerID("sky-uk") )
                       {
                         set_vendor_spec_conf();
                         v_secure_system("gw_lan_refresh &");
                       }
-#endif /** _SCER11BEL_PRODUCT_REQ_ */
+#endif /** _SCER11BEL_PRODUCT_REQ_, _SCXF11BFL_PRODUCT_REQ_ */
 #endif /** _RDKB_GLOBAL_PRODUCT_REQ_ */
 
                       if (!hotspot_started) {
@@ -1673,7 +1673,7 @@ static int GWP_act_ProvEntry()
 
     GWPROV_PRINT(" EthWanInterfaceName: %s \n", ethwan_ifname );
 
-#if defined (_BRIDGE_UTILS_BIN_) && (!defined (_WNXL11BWL_PRODUCT_REQ_) && !defined(_SCER11BEL_PRODUCT_REQ_))
+#if defined (_BRIDGE_UTILS_BIN_) && (!defined (_WNXL11BWL_PRODUCT_REQ_) && !defined(_SCER11BEL_PRODUCT_REQ_) && !defined(_SCXF11BFL_PRODUCT_REQ_))
     if ( syscfg_set_commit( NULL, "eth_wan_iface_name", ethwan_ifname ) != 0 )
     {
         GWPROV_PRINT( "syscfg_set failed for eth_wan_iface_name\n" );
@@ -1774,7 +1774,8 @@ pid_t findProcessId(char *processName)
 
     if ((f = popen(request, "r")) != NULL)
     {
-        fgets(response, (255), f);
+        if(fgets(response, (255), f) == NULL)
+            GWPROV_PRINT("%s fgets error \n", __FUNCTION__);
 
         pclose(f);
     }
@@ -1783,7 +1784,8 @@ pid_t findProcessId(char *processName)
 
     if ((f = popen(request, "r")) != NULL)
     {
-        fgets(response, (255), f);
+        if(fgets(response, (255), f) == NULL)
+            GWPROV_PRINT("%s fgets error \n", __FUNCTION__);
         pid = atoi(response);
         pclose(f);
     }

@@ -1,0 +1,62 @@
+{
+  "_comment": "Component Build Configuration for Coverity/Native Builds",
+  "_version": "2.0",
+  "_description": "Defines dependencies and build settings for the native component",
+
+  "dependencies": {
+    "_comment": "External repositories needed by this component",
+    "repos": [
+      {
+        "name": "Utopia",
+        "repo": "https://github.com/rdkcentral/utopia.git",
+        "branch": "develop",
+        "header_paths": [
+           { "source": "source/include/sysevent", "destination": "$HOME/usr/include/rdkb/sysevent" },
+           { "source": "source/include/syscfg", "destination": "$HOME/usr/include/rdkb/syscfg" },
+           { "source": "source/include/utctx", "destination": "$HOME/usr/include/rdkb/utctx" },
+	   { "source": "source/include", "destination": "$HOME/usr/include/rdkb" },
+           { "source": "source/utapi/lib", "destination": "$HOME/usr/include/rdkb/utapi" },
+           { "source": "source/include/ulog", "destination": "$HOME/usr/include/rdkb/ulog" },
+           { "source": "source/util/utils", "destination": "$HOME/usr/include/rdkb" },
+           { "source": "source/sysevent/lib", "destination": "$HOME/usr/include/rdkb/sysevent" },
+           { "source": "source/util/print_uptime", "destination": "$HOME/usr/include/rdkb" }
+        ],
+	"build":{
+          "type": "script",
+          "script": "./build_tools_workflows/cov_docker_script/common_external_build.sh"
+        }
+      },
+      {
+        "name": "rdkb-halif-cm",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-cm.git",
+        "branch": "main",
+        "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+      {
+        "name": "hal_cm_gwprovappabs",
+        "repo": "https://github.com/rdkcentral/hardware-abstraction-layer.git",
+        "branch": "develop",
+        "build": {
+          "type": "commands",
+          "commands": [
+            "./autogen.sh",
+            "./configure",
+            "make -C source/cm CPPFLAGS=\"-I$HOME/usr/include/rdkb\" LDFLAGS=\"-L$HOME/usr/local/lib\"",
+	          "make -C source/gwprovappabs CPPFLAGS=\"-I$HOME/usr/include/rdkb\" LDFLAGS=\"-L$HOME/usr/local/lib\""
+          ]
+        }
+      }
+    ]
+  },
+  "native_component": {
+    "name": "gw-provisioning-application",
+    "include_path": "$HOME/usr/include/rdkb:/usr/include/dbus-1.0:/usr/lib/x86_64-linux-gnu/dbus-1.0/include:/usr/lib/aarch64-linux-gnu/dbus-1.0/include",
+    "lib_output_path": "$HOME/usr/local/lib/",
+    "build": {
+      "type": "autotools",
+      "configure_options_file": "cov_docker_script/configure_options.conf"
+    }
+  }
+}

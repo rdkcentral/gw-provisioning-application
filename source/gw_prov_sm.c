@@ -2407,7 +2407,7 @@ static void get_dateanduptime(char *buffer, int *uptime)
         strftime( fmt, sizeof( fmt ), "%y%m%d-%T.%%06u", tm );
         snprintf( buf, sizeof( buf ), fmt, tv.tv_usec );
     }
-    sprintf( buffer, "%s", buf);
+    sprintf( buffer, "%s , %s", buf);
     *uptime = info.uptime;
 }
 

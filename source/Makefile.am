@@ -18,6 +18,7 @@
 ##########################################################################
 AM_CFLAGS =
 AM_CFLAGS += -DCONFIG_PRIMARY_NET_BRIDGE_MODE
+AM_CFLAGS += -Wno-error
 
 ACLOCAL_AMFLAGS = -I m4
 

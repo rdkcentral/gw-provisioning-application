@@ -541,12 +541,8 @@ static bool WriteTr69TlvData(unsigned char typeOfTLV)
 		tlvObject->FreshBootUp = TRUE;
 		tlvObject->Tr69Enable = FALSE;
 		FILE * file= fopen(TR69_TLVDATA_FILE, "wb");
-		if (file != NULL)
-		{
-			fwrite(tlvObject, sizeof(Tr69TlvData), 1, file);
-			fclose(file);
-
-		}
+		fwrite(tlvObject, sizeof(Tr69TlvData), 1, file);
+		fclose(file);
 	}
 	FILE * file= fopen(TR69_TLVDATA_FILE, "rb");
 	if (file != NULL)

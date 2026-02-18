@@ -3698,8 +3698,6 @@ int main(int argc, char *argv[])
     	/* Command line - ignored */
     	SME_CreateEventHandler(obj);
     	GWPROV_PRINT(" Creating Event Handler over\n");
-           /*Coverity Fix CID:80015 RESOURCE_LEAK */
-           free(obj);
     } //if(obj != NULL)
 
 #else

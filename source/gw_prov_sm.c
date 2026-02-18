@@ -2501,8 +2501,6 @@ static int GWP_act_DocsisLinkUp_callback()
         sysevent_set(sysevent_fd_gs, sysevent_token_gs, "wan_service-status", "started", 0);
         v_secure_system("sysevent set bridge_mode `syscfg get bridge_mode`");
     }
-    if(buff != NULL)
-        free(buff);
 #else
     if (eRouterMode != DOCESAFE_ENABLE_DISABLE_extIf /*&& bridge_mode == 0*/) // mipieper - pseduo bridge support
     {

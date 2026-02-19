@@ -405,7 +405,7 @@ static eGwpThreadType Get_GwpThreadType(char *name)
             }
         }
     }
-
+	name[0] = '\0';
     return ret;
 }
 

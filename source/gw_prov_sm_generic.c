@@ -93,6 +93,10 @@
 #if defined(_XB6_PRODUCT_REQ_) || defined(_CBR2_PRODUCT_REQ_) || defined(_RDKB_GLOBAL_PRODUCT_REQ_)
 #include "platform_hal.h"
 #endif
+
+#ifdef _ONESTACK_PRODUCT_REQ_
+#include <rdkb_feature_mode_gate.h>
+#endif
 //Added for lxcserver thread function
 #if defined(_PLATFORM_RASPBERRYPI_) || defined(_PLATFORM_BANANAPI_R4_)
 #define PORT 8081
@@ -1347,7 +1351,14 @@ static void *GWP_sysevent_threadfunc(void *data)
             sysevent_set(sysevent_fd_gs, sysevent_token_gs, "lnf-setup","6", 0);
 	}
 #else
+#ifdef _ONESTACK_PRODUCT_REQ_
+        if(true == isFeatureSupportedInCurrentMode(FEATURE_XHS_LNF))
+        {
+            sysevent_set(sysevent_fd_gs, sysevent_token_gs, "lnf-setup","6", 0);
+        }
+#else
         sysevent_set(sysevent_fd_gs, sysevent_token_gs, "lnf-setup","6", 0);
+#endif
 #endif
         
 #endif

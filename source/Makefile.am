@@ -46,6 +46,10 @@ if FEATURE_RDKB_WAN_MANAGER
 gw_prov_utopia_LDFLAGS += -lhal_ethsw
 endif
 
+if ONESTACK_PRODUCT_REQ
+gw_prov_utopia_LDFLAGS += -lrdkb_feature_mode_gate
+endif
+
 if UNIT_TEST_DOCKER_SUPPORT
 SUBDIRS = test
 endif

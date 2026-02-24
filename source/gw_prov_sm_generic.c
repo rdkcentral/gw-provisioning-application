@@ -1352,7 +1352,7 @@ static void *GWP_sysevent_threadfunc(void *data)
 	}
 #else
 #ifdef _ONESTACK_PRODUCT_REQ_
-        if(true == isFeatureSupportedInCurrentMode(FEATURE_XHS_LNF))
+        if(true == isFeatureSupportedInCurrentMode(FEATURE_LNF))
         {
             sysevent_set(sysevent_fd_gs, sysevent_token_gs, "lnf-setup","6", 0);
         }

@@ -207,7 +207,7 @@ typedef void (*fpDocsisEnabled)(unsigned char);
 typedef void (*fpDocsisRATransInterval)(unsigned short);
 #endif
 typedef TlvParseCallbackStatusExtIf_e (*fpGW_Tr069PaSubTLVParse)(unsigned char type, unsigned short length, const unsigned char *value);
-#ifdef CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION
+#if defined(CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION) || defined(_ONESTACK_PRODUCT_REQ_)
 typedef void (*fpGW_SetTopologyMode)(unsigned char type, unsigned short length, const unsigned char *value);
 #endif
 
@@ -231,7 +231,7 @@ typedef struct __appCallBack
     #endif
 #endif
 	fpGW_Tr069PaSubTLVParse pGW_Tr069PaSubTLVParse;
-#ifdef CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION
+#if defined(CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION) || defined(_ONESTACK_PRODUCT_REQ_)
 	fpGW_SetTopologyMode pGW_SetTopologyMode;
 #endif
 }appCallBack;

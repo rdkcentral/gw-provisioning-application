@@ -307,7 +307,7 @@ static bool GW_SetTr069PaMibString(unsigned char **cur, unsigned char sub_oid, u
 static void check_lan_wan_ready();
 //static TlvParseCallbackStatus_e gotEnableType(unsigned char type, unsigned short length, const unsigned char *value);
 
-#ifdef CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION
+#if defined(CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION) || defined(_ONESTACK_PRODUCT_REQ_)
 static TlvParseCallbackStatusExtIf_e GW_setTopologyMode(unsigned char type, unsigned short length, const unsigned char *value);
 #endif
 
@@ -948,8 +948,7 @@ static STATUS GW_UpdateTr069Cfg(void)
 }
 #endif
 #endif
-
-#ifdef CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION
+#if defined(CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION) || defined(_ONESTACK_PRODUCT_REQ_)
 static TlvParseCallbackStatusExtIf_e GW_setTopologyMode(unsigned char type, unsigned short length, const unsigned char *value)
 {
     unsigned char tpMode = *value;
@@ -2383,7 +2382,7 @@ static int GWP_act_DocsisLinkDown_callback_2()
 #if defined (_COSA_BCM_ARM_)
        remove("/tmp/phylink_wan_state_up");
 #endif
-   #ifdef CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION
+#if defined(CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION) || defined(_ONESTACK_PRODUCT_REQ_)   
        sysevent_set(sysevent_fd_gs, sysevent_token_gs, "dhcpv6_client-stop", "", 0);
    #endif
     }
@@ -2518,7 +2517,7 @@ static int GWP_act_DocsisLinkUp_callback()
 	{
 		sysevent_set(sysevent_fd_gs, sysevent_token_gs, "sshd-restart", "", 0);
 	}
-    #ifdef CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION
+#if defined(CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION) || defined(_ONESTACK_PRODUCT_REQ_)
 	sysevent_set(sysevent_fd_gs, sysevent_token_gs, "dhcpv6_client-start", "", 0);
     #endif
     }
@@ -3689,7 +3688,7 @@ int main(int argc, char *argv[])
        obj->pDocsis_GetRATransInterval = docsis_GetRATransInterval_callback;
 #endif
        obj->pGW_Tr069PaSubTLVParse = (fpGW_Tr069PaSubTLVParse)GW_Tr069PaSubTLVParse;
-#ifdef CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION
+#if defined(CISCO_CONFIG_DHCPV6_PREFIX_DELEGATION) || defined(_ONESTACK_PRODUCT_REQ_)
 	void* pGW_setTopologyMode = GW_setTopologyMode;
         obj->pGW_SetTopologyMode = (fpGW_SetTopologyMode)pGW_setTopologyMode;
 #endif

@@ -2672,7 +2672,6 @@ void GWP_Util_get_shell_output( char *cmd, char *out, int len )
         if(rc != EOK)
         {
            ERR_CHK(rc);
-	   pclose( fp );
            return;
         }         
 

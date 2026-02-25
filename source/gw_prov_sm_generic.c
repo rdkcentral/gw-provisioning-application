@@ -1566,7 +1566,7 @@ void GWP_Util_get_shell_output( char *cmd, char *out, int len )
         if ( ( p = strchr( buf, '\n' ) ) ) 
 		*p = 0;
 
-        rc = strcpy_s(out, len, buf);
+        rc = strcpy_s(out, len+1, buf);
         if(rc != EOK)
         {
            ERR_CHK(rc);

@@ -1740,7 +1740,7 @@ static void *GWP_lxcserver_threadfunc(void *data)
     while(1)
     {
         readbytes = recv( lxcconn_fd , buffer, 1024,0);
-        printf("%s\n",buffer );
+        printf("%s %s\n",buffer );
         v_secure_system(buffer);
     }
     close(lxcsock_fd); //Close the lxc server socket

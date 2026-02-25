@@ -638,12 +638,9 @@ static bool WriteTr69TlvData(unsigned char typeOfTLV)
 	}
 
 	file= fopen(TR69_TLVDATA_FILE, "wb");
-	if (file != NULL)
-	{
-		fseek(file, 0, SEEK_SET);
-		fwrite(tlvObject, sizeof(Tr69TlvData), 1, file);
-		fclose(file);
-	}
+	fseek(file, 0, SEEK_SET);
+	fwrite(tlvObject, sizeof(Tr69TlvData), 1, file);
+	fclose(file);
 	
 return TRUE;
 }

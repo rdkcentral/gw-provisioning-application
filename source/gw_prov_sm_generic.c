@@ -1355,6 +1355,11 @@ static void *GWP_sysevent_threadfunc(void *data)
         if(true == isFeatureSupportedInCurrentMode(FEATURE_LNF))
         {
             sysevent_set(sysevent_fd_gs, sysevent_token_gs, "lnf-setup","6", 0);
+            t2_event_d("SYS_INFO_LNF_Enabled", 1);
+        }
+        else
+        {
+            t2_event_d("SYS_INFO_LNF_NotSupported", 1);
         }
 #else
         sysevent_set(sysevent_fd_gs, sysevent_token_gs, "lnf-setup","6", 0);

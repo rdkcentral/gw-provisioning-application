@@ -47,7 +47,7 @@ gw_prov_utopia_LDFLAGS += -lhal_ethsw
 endif
 
 if ONESTACK_PRODUCT_REQ
-gw_prov_utopia_LDADD = -lrdkb_feature_mode_gate -lonestack_syscfg
+gw_prov_utopia_LDADD = -lrdkb_feature_mode_gate
 endif
 
 if UNIT_TEST_DOCKER_SUPPORT

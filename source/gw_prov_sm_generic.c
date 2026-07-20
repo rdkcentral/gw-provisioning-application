@@ -419,7 +419,7 @@ unsigned char IsThisFeatureApplicable( const char* pcFeatureDBFlag )
     return FALSE;
 }
 
-#if defined(_SCER11BEL_PRODUCT_REQ_) || defined(_SCXF11BFL_PRODUCT_REQ_)
+#if defined(_SCER11BEL_PRODUCT_REQ_) || defined(_SCXF11BFL_PRODUCT_REQ_) || defined(_XER2_PRODUCT_REQ_)
 static int getVendorClassInfo(char *buffer, int length)
 {
     char model[32] = "";
@@ -478,7 +478,7 @@ static void set_vendor_spec_conf( void )
         GWPROV_PRINT("getVendorClassInfo failed");
     }
 }
-#endif /** _SCER11BEL_PRODUCT_REQ_ , _SCXF11BFL_PRODUCT_REQ_*/
+#endif /** _SCER11BEL_PRODUCT_REQ_ , _SCXF11BFL_PRODUCT_REQ_, _XER2_PRODUCT_REQ_ */
 #endif /** _RDKB_GLOBAL_PRODUCT_REQ_ */
 
 STATIC int IsEthWanEnabled(void)
@@ -1438,13 +1438,13 @@ static void *GWP_sysevent_threadfunc(void *data)
                             v_secure_system("ip -6 addr add %s/64 dev %s", tmp_buf, LAN_BRIDGE_NAME);
                         }                      
                       }
-#if defined(_SCER11BEL_PRODUCT_REQ_) || defined(_SCXF11BFL_PRODUCT_REQ_)
+#if defined(_SCER11BEL_PRODUCT_REQ_) || defined(_SCXF11BFL_PRODUCT_REQ_) || defined(_XER2_PRODUCT_REQ_)		      
                       if ( TRUE == IsThisCurrentPartnerID("sky-uk") )
                       {
                         set_vendor_spec_conf();
                         v_secure_system("gw_lan_refresh &");
                       }
-#endif /** _SCER11BEL_PRODUCT_REQ_, _SCXF11BFL_PRODUCT_REQ_ */
+#endif /** _SCER11BEL_PRODUCT_REQ_, _SCXF11BFL_PRODUCT_REQ_, _XER2_PRODUCT_REQ_ */		      
 #endif /** _RDKB_GLOBAL_PRODUCT_REQ_ */
 
                       if (!hotspot_started) {
